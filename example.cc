@@ -2,11 +2,6 @@
 //  do "make" to make the plugin package
 //  do "make example" to make this eample file
 //  do "./example
-//  VariableR Package
-//  Questions/Comments?  jthaler@jthaler.net
-//
-//  Copyright (c) 2009-2013
-//  David Krohn, Jesse Thaler, and Lian-Tao Wang
 //
 //----------------------------------------------------------------------
 // This file is part of FastJet contrib.
