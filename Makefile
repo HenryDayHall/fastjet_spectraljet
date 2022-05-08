@@ -14,14 +14,18 @@ check_script = ../utils/check.sh
 
 #------------------------------------------------------------------------
 # things that are specific to this contrib
-NAME=VariableR
-SRCS=VariableR.cc
+NAME=SpectralPlugin
+SRCS=SpectralPlugin.cc
 EXAMPLES=example
-INSTALLED_HEADERS=VariableR.hh
+INSTALLED_HEADERS=SpectralPlugin.hh
 #------------------------------------------------------------------------
 
 CXXFLAGS+= $(shell $(FASTJETCONFIG) --cxxflags)
 LDFLAGS += -lm $(shell $(FASTJETCONFIG) --libs)
+
+# add the python config
+CXXFLAGS+= $(shell python3-config --cflags --ldflags)
+#CXXFLAGS+= --python3.7
 
 OBJS  = $(SRCS:.cc=.o)
 EXAMPLES_SRCS  = $(EXAMPLES:=.cc)
@@ -48,7 +52,7 @@ examples: $(EXAMPLES)
 # the following construct alloews to build each of the examples listed
 # in $EXAMPLES automatically
 $(EXAMPLES): % : %.o all
-	$(CXX) -o $@ $< -L. -l$(NAME) $(LDFLAGS)
+	$(CXX) -o $@ $< -L. -l$(NAME) $(LDFLAGS) $(CXXFLAGS)
 
 # check that everything went fine
 check: examples

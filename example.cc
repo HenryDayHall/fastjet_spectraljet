@@ -30,7 +30,7 @@
 
 #include "fastjet/PseudoJet.hh"
 #include <sstream>
-#include "VariableR.hh" // In external code, this should be fastjet/contrib/VariableR.hh
+#include "SpectralPlugin.hh" // In external code, this should be fastjet/contrib/SpectralPlugin.hh
 
 using namespace std;
 using namespace fastjet;
@@ -53,44 +53,24 @@ int main(){
   // anti-kT variable R
   //----------------------------------------------------------
 
-  AKTVR lvjet_pluginAKT(2000,2.0);
-  fastjet::JetDefinition jet_defAKT(&lvjet_pluginAKT);
-  fastjet::ClusterSequence clust_seqAKT(event, jet_defAKT);
+  cout << "Set up Spectral plugin\n";
+  SpectralLong lvjet_pluginSpectral(50);
+  fastjet::JetDefinition jet_defSpectral(&lvjet_pluginSpectral);
+  fastjet::ClusterSequence clust_seqSpectral(event, jet_defSpectral);
   
   // tell the user what was done
-  cout << "Ran " << jet_defAKT.description() << endl;
+  cout << "Ran " << jet_defSpectral.description() << endl;
 
   // extract the inclusive jets with pt > 5 GeV
-  double ptminAKT = 5.0;
-  vector<fastjet::PseudoJet> inclusive_jetsAKT = clust_seqAKT.inclusive_jets(ptminAKT);
+  double ptminSpectral = 5.0;
+  vector<fastjet::PseudoJet> inclusive_jetsSpectral = clust_seqSpectral.inclusive_jets(ptminSpectral);
   
   // print them out
-  cout << "Printing inclusive jets with pt > "<< ptminAKT <<" GeV\n";
+  cout << "Printing inclusive jets with pt > "<< ptminSpectral <<" GeV\n";
   cout << "---------------------------------------\n";
-  fastjet::contrib::print_jets(clust_seqAKT, inclusive_jetsAKT);
+  fastjet::contrib::print_jets(clust_seqSpectral, inclusive_jetsSpectral);
   cout << endl;
 
-  //----------------------------------------------------------
-  // illustrate how VariableR contrib works
-  // Cambridge-Aachen variable R
-  //----------------------------------------------------------
-
-  CAVR lvjet_pluginCA(2000,2.0);
-  fastjet::JetDefinition jet_defCA(&lvjet_pluginCA);
-  fastjet::ClusterSequence clust_seqCA(event, jet_defCA);
-  
-  // tell the user what was done
-  cout << "Ran " << jet_defCA.description() << endl;
-
-  // extract the inclusive jets with pt > 5 GeV
-  double ptminCA = 5.0;
-  vector<fastjet::PseudoJet> inclusive_jetsCA = clust_seqCA.inclusive_jets(ptminCA);
-  
-  // print them out
-  cout << "Printing inclusive jets with pt > "<< ptminCA <<" GeV\n";
-  cout << "---------------------------------------\n";
-  fastjet::contrib::print_jets(clust_seqCA, inclusive_jetsCA);
-  cout << endl;
 
   return 0;
 }
